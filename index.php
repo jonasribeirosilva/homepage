@@ -1,115 +1,12 @@
 <?php
-$meses = [
-  1 => 'Janeiro', 'Fevereiro', 'Março',
-  'Abril', 'Maio', 'Junho',
-  'Julho', 'Agosto', 'Setembro',
-  'Outubro', 'Novembro', 'Dezembro'
-];
-$mesesCurto = [
-  1 => 'Jan', 'Fev', 'Mar',
-  'Abr', 'Mai', 'Jun',
-  'Jul', 'Ago', 'Set',
-  'Out', 'Nov', 'Dez'
-];
-$diaSemana = [
-  'Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira',
-  'Quinta-Feira', 'Sexta-Feira', 'Sábado'
-];
-$diaSemanaCurto = [
-  'Dom', 'Seg', 'Ter', 'Qua',
-  'Qui', 'Sex', 'Sáb'
-];
-$now = time();
-$date = [
-  'dia' => date('d', $now),
-  'mes' => date('n', $now),
-  'ano' => date('Y', $now),
-  'diaSemana' => date('w', $now)
-];
-$hojeExt = "{$diaSemana[$date['diaSemana']]}, {$date['dia']} de {$meses[$date['mes']]} de {$date['ano']}";
-$hoje = date('d/m/Y', $now);
-function faicon ($icon)
-{
-  return ' <i class="'.$icon.'"></i> ';
-}
-// --------------------------------
-// ----------- Atalhos ------------
-// --------------------------------
-function addAtalho (&$atalhos = [], $label, $href, $color = 'teal')
-{
-  $atalhos[] = [
-    'icon' => null,
-    'label' => $label,
-    'href' => $href,
-    'color' => $color
-  ];  
-}
-try {
-  $atalhos = json_decode(
-    file_get_contents('atalhos.json'),
-    true
-  );
-  
-  if (json_last_error() != JSON_ERROR_NONE) {
-    throw new \Exception("Erro ao abrir atalhos");
-  }
-} catch (\Exception $e) {
-  $atalhos = [];
-}
+error_reporting(E_ALL);
 
-// ------------------------------------
-// ----------- Projetos ---------------
-// ------------------------------------
-function addProjetos (&$projetos = [], $label, $href, $srcIcon = null)
-{
-  $projetos[] = [
-    'label' => $label,
-    'href' => $href,
-    'srcIcon' => $srcIcon
-  ];  
-}
-try {
-  $projetos = json_decode(
-    file_get_contents('projetos.json'),
-    true
-  );
-  
-  if (json_last_error() != JSON_ERROR_NONE) {
-    throw new \Exception("Erro ao abrir projetos");
-  }
-} catch (\Exception $e) {
-  $projetos = [];
-}
+include "Common.php";
+include "Atalhos.php";
+include "Projetos.php";
+$atalhos = Atalhos::getAtalhos();
+$projetos = Projetos::getProjetos();
 
-// addProjetos($projetos, 'Klug ERP', 'http://klugerp.com', 'http://klugerp.com/favicon.ico');
-/**
- * Listar um diretorio
- * 
- * @param string $path Caminho para listar
- * @param array of string $excludes Nomes excluidos da lista
- * @param int $type Tipo de arquivos (0 - Pastas / 1 - Arquivos / 2 - Ambos)
- * @return array of string Lista de arquivos/pastas
- * */
-function listDir ($path, $excludes = [], $type = 0)
-{
-  $excludes[] = '.';
-  $excludes[] = '..';
-  if (is_dir($path)) {
-    if ($handle = opendir($path)) {
-      $data = [];
-      while (false !== ($entry = readdir($handle))) {
-        if (substr($entry, 0, 1) != '.' && !in_array($entry, $excludes)) {
-            if ($type == 2 || ($type == 0 && is_dir($path.$entry)) || ($type == 1 && is_file($path.$entry))) {
-                $data[] = $entry;
-            }
-        }
-      }
-      closedir($handle);
-      return $data;
-    }
-  }
-  return [];
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -124,10 +21,10 @@ function listDir ($path, $excludes = [], $type = 0)
   <body class="grey lighten-2">
   <a id="top"></a>
   <!-- MENU -->
-   <nav class="grey darken-3 z-depth-0">
+    <nav class="grey darken-3 z-depth-0">
     <div class="nav-wrapper">
       <div class="container">
-        <a href="#" class="brand-logo white-text"><?php echo faicon('fas fa-home');?> HOME</a>
+        <a href="#" class="brand-logo white-text"><i class="fas fa-home"></i> HOME</a>
         <a href="#" data-target="menu-mobile" class="black-text sidenav-trigger">
           <i class="fas fa-bars"></i>
         </a>
@@ -217,45 +114,28 @@ function listDir ($path, $excludes = [], $type = 0)
             <span class="card-title">Downloads</span>
 <?php
   if (isset($_GET['del']) && !empty($_GET['del'])) {
-    $filename = str_replace('/', '', $_GET['del']);
-    if (!in_array(substr($filename,0,1),['.','~'])) {
-		$filename = realpath('./download'). DIRECTORY_SEPARATOR . $filename;
-		if (is_file($filename)) {
-		  unlink($filename);
-		}
-	}
-  }
-  foreach ($_FILES["arquivo"]["error"] as $i => $error) {
-    if ($error == UPLOAD_ERR_OK) {
-      $filename = realpath('./download'). DIRECTORY_SEPARATOR . $_FILES['arquivo']['name'][$i];
-      if (is_file($filename)) {
-        unlink($filename);
-      }
-      if (move_uploaded_file($_FILES['arquivo']['tmp_name'][$i], $filename)) {
-          chmod($filename, 0666);
-      } else {
-        echo '<p>Erro ao enviar arquivo</p>';
-      }
-    }
+    deleteFile($_GET['del']);
+  } else {
+    uploadFile();
   }
   $files = listDir('./download/', [], 1);
   if (count($files) == 0) {
-	echo '<p class="grey-text">// Nenhum arquivo //</p>';
+  echo '<p class="grey-text">// Nenhum arquivo //</p>';
   } else {
-	  echo '<table class="table">';
-	  foreach ($files as $entry)
-	  {
-		echo '<tr>';
-		if ( in_array(substr($entry, -3), ['jpg','png','ico'])) {
-		  echo '<td width="64"><img src="download/'.$entry.'" style="width:64px;border:solid 1px #000;" /></td>';
-		  echo '<td><a href="download/'.$entry.'" target="_blank">'.strtoupper($entry).'</a></td>';
-		} else {
-		  echo '<td colspan="2"><a href="download/'.$entry.'" target="_blank">'.strtoupper($entry).'</a></td>';
-		}
-		echo '<td width="1"><a href="?del='.$entry.'" class="btn red"><i class="fa fa-trash"></i></a></td>';
-		echo '</tr>';
-	  }
-	}
+    echo '<table class="table">';
+    foreach ($files as $entry)
+    {
+      echo '<tr>';
+      if ( in_array(substr($entry, -3), ['jpg','png','ico'])) {
+        echo '<td width="64"><img src="download/'.$entry.'" style="width:64px;border:solid 1px #000;" /></td>';
+        echo '<td><a href="download/'.$entry.'" target="_blank">'.strtoupper($entry).'</a></td>';
+      } else {
+        echo '<td colspan="2"><a href="download/'.$entry.'" target="_blank">'.strtoupper($entry).'</a></td>';
+      }
+      echo '<td width="1"><a href="?del='.$entry.'" class="btn red"><i class="fa fa-trash"></i></a></td>';
+      echo '</tr>';
+    }
+  }
   echo '</table>';
 ?>
                 <form id="frm_upload" action="" method="post" enctype="multipart/form-data">
@@ -264,7 +144,7 @@ function listDir ($path, $excludes = [], $type = 0)
                 </form>
           </div>
           <div class="card-action">
-			  <a href="#" class="teal-text" onclick="$('#in_arquivo').click();return false;"><i class="fa fa-upload"></i> Enviar arquivo</a>
+        <a href="#" class="teal-text" onclick="$('#in_arquivo').click();return false;"><i class="fa fa-upload"></i> Enviar arquivo</a>
           </div>
         </div>
       </div>
@@ -274,11 +154,14 @@ function listDir ($path, $excludes = [], $type = 0)
   <!-- Rodape center -->
   <footer class="blue-grey darken-4 white-text" style="margin:0px;padding: 30px;">
   <div class="container center-align">
-    <a href="#top" class="white-text">
-      <i class="fas fa-chevron-up"></i><br/>
-      Ir para o Topo
-    </a>
-    <div style="margin-top: 20px;">&copy; Copyright 2018 Jonas Silva.</div>
+    <div>
+      <a href="#top" class="btn btn-xs grey darken-4">
+        <i class="fas fa-chevron-up"></i>
+        Ir para o Topo
+      </a>
+      <a href="https://github.com/jonasribeirosilva/homepage" class="btn btn-xs blue darken-3"> Code in <i class="fab fa-github"></i></a>
+    </div>
+    <div style="margin-top: 20px;">&copy; Copyright 2019 Jonas Silva. | v1.0 | License: MIT.</div>
   </div>
   </footer>
   <script src="public/jquery-3.3.1.min.js"></script>

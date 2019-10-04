@@ -53,10 +53,20 @@
       "label": "Saude(API)",
       "href": "http://api.saude.net",
       "srcIcon": "http://saude.net/favicon.ico"
+   },
    { 
       "label": "Saude",
       "href": "http://saude.net",
       "srcIcon": "http://saude.net/favicon.ico"
+   },
+   { 
+      "label": "KlugStore",
+      "href": "http://store.net",
+      "srcIcon": "http://store.net/favicon.ico"
+   },
+   { 
+      "label": "KlugStore (API)",
+      "href": "http://api.store.net",
+      "srcIcon": "http://api.store.net/favicon.ico"
    }
-
 ]
