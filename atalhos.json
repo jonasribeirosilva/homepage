@@ -1,0 +1,50 @@
+[
+    {
+        "icon": "fab fa-google",
+        "label": "Gmail",
+        "href": "https://gmail.com",
+        "color": "red"
+    },
+    {
+        "icon": "fab fa-google",
+        "label": "YouTube",
+        "href": "https://youtube.com",
+        "color": "red"
+    },
+    {
+        "icon": "fab fa-facebook",
+        "label": "Facebook",
+        "href": "https://facebook.com",
+        "color": "blue"
+    },
+    {
+        "icon": "fab fa-twitter",
+        "label": "Twitter",
+        "href": "https://twitter.com",
+        "color": "blue"
+    },
+    {
+        "icon": "fab fa-font-awesome",
+        "label": "Font Awesome v4.7",
+        "href": "https://fontawesome.com/v4.7.0/icons/",
+        "color": "red"
+    },
+    {
+        "icon": "fab fa-amazon",
+        "label": "AWS Console",
+        "href": "https://klugdev2019.signin.aws.amazon.com/console",
+        "color": "black"
+    },
+    {
+        "icon": "fab fa-github",
+        "label": "GitHub",
+        "href": "https://github.com",
+        "color": "black"
+    },
+    {
+        "icon": "fab fa-whatsapp",
+        "label": "Whatsapp",
+        "href": "https://web.whatsapp.com",
+        "color": "green darken-2"
+    }
+]

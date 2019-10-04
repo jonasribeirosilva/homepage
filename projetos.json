@@ -1,0 +1,72 @@
+[
+    {
+        "label": "Localhost(NPM)",
+        "href": "http://localhost:8080",
+        "srcIcon": "http://localhost/homepage/public/nodejs.ico"
+    },
+    {
+        "label": "Klug ERP",
+        "href": "http://klugerp.com",
+        "srcIcon": "http://klugerp.com/favicon.ico"
+    },
+    {
+        "label": "Klug CRM",
+        "href": "http://klugcrm.net",
+        "srcIcon": "http://klugcrm.net/favicon.ico"
+    },
+    {
+        "label": "Klug CRM(API)",
+        "href": "http://api.klugcrm.net",
+        "srcIcon": "http://klugcrm.net/favicon.ico"
+    },
+    {
+        "label": "CRM vAlpha",
+        "href": "http://crmalpha.net",
+        "srcIcon": "http://crmalpha.net/favicon.ico"
+   },
+   {
+       "label": "DOCS vAlpha",
+       "href": "http://docsalpha.net",
+       "srcIcon": "http://docsalpha.net/favicon.ico"
+   },
+   {
+       "label": "MONGO TESTE",
+       "href": "http://mongojonas.net",
+       "srcIcon": "http://mongojonas.net/favicon.ico"
+   },
+   {
+       "label": "(BACK) SuperInvest",
+       "href": "http://api.superinvest.net",
+       "srcIcon": "http://api.superinvest.net/favicon.ico"
+   },
+   {
+       "label": "(Front) SuperInvest",
+       "href": "http://superinvest.net",
+       "srcIcon": "http://superinvest.net/favicon.ico"
+   },
+   {
+      "label": "OrLechol",
+      "href": "http://orlechol.net",
+      "srcIcon": "http://orlechol.net/favicon.ico"
+   },
+   {
+      "label": "Saude(API)",
+      "href": "http://api.saude.net",
+      "srcIcon": "http://saude.net/favicon.ico"
+   },
+   { 
+      "label": "Saude",
+      "href": "http://saude.net",
+      "srcIcon": "http://saude.net/favicon.ico"
+   },
+   { 
+      "label": "KlugStore",
+      "href": "http://store.net",
+      "srcIcon": "http://store.net/favicon.ico"
+   },
+   { 
+      "label": "KlugStore (API)",
+      "href": "http://api.store.net",
+      "srcIcon": "http://api.store.net/favicon.ico"
+   }
+]

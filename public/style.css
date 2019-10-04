@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+body {
+  font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+}
+.t1 {
+  font-size: 1em;
+  font-weight: 400;
+}
+.t2 {
+  font-size: 1.4em;
+  font-weight: 400;
+}
+h6 {
+  font-size: 0.6em;
+  font-weight: 700;
+}
+h5 {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+h4 {
+  font-size: 1em;
+  font-weight: 700;
+}
+h3 {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.8em;
+  font-weight: 700;
+}
+h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+}
+.text-light {
+  font-weight: 300;
+}
+strong, .text-bold {
+  font-weight: 700;
+}
+.text-center {
+  text-align: center;
+}
+.justify-align {
+  text-align: justify;
+}
+footer {
+  font-size: 0.8em;
+  font-weight: 300;
+}
+/* label color */
+.input-field label {
+ color: #FFF;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label,.input-field textarea:focus + label {
+ color: #DDD  !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,.input-field textarea:focus {
+ border-bottom: 1px solid #DDD  !important;
+ box-shadow: 0 1px 0 0 #DDD  !important;
+}
+/* valid color */
+.input-field input[type=text].valid {
+ border-bottom: 1px solid #FFF;
+ box-shadow: 0 1px 0 0 #FFF;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+ border-bottom: 1px solid #FFF;
+ box-shadow: 0 1px 0 0 #FFF;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+ color: #FFF;
+}
